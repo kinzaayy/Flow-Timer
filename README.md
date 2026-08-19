@@ -38,4 +38,5 @@ npm run dev
 ## Roadmap
 
 - **v2:** dark mode, long break, custom durations, desktop notifications, daily stats, local storage, settings panel
-- **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
+- **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync.
+Deployed via Vercel.
