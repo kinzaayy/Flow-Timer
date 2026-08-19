@@ -1,7 +1,7 @@
-# StudyStack Pomodoro Timer
+# Flow Timer
 
 A clean, minimal Pomodoro Timer built with React, Vite, and Tailwind CSS.
-Built as the first portfolio project for the StudyStackCo brand.
+Built as the first portfolio project for the Flow Timer brand.
 
 ## Features (v1 / MVP)
 
@@ -38,5 +38,4 @@ npm run dev
 ## Roadmap
 
 - **v2:** dark mode, long break, custom durations, desktop notifications, daily stats, local storage, settings panel
-- **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync.
-Deployed via Vercel.
+- **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
