@@ -9,6 +9,7 @@ Built as the first portfolio project for the StudyStackCo brand.
 - Start / Pause / Reset controls
 - Session counter — tracks completed focus sessions for the visit
 - Two modes: Focus and Short Break
+- Audio alert when a session ends
 
 ## Tech Stack
 
@@ -36,5 +37,5 @@ npm run dev
 
 ## Roadmap
 
-- **v2:** dark mode, long break, custom durations, sound/desktop notifications, daily stats, local storage, settings panel
+- **v2:** dark mode, long break, custom durations, desktop notifications, daily stats, local storage, settings panel
 - **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
