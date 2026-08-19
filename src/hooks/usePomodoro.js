@@ -6,6 +6,33 @@ const DURATIONS = {
 };
 
 /**
+ * Plays a short beep using the Web Audio API.
+ * No audio file needed — the sound is generated in the browser.
+ */
+function playBeep() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  const audioContext = new AudioContextClass();
+
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
+  oscillator.type = "sine";
+  oscillator.frequency.value = 880; // A5 note
+
+  gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(
+    0.001,
+    audioContext.currentTime + 0.5
+  );
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + 0.5);
+}
+
+/**
  * Owns all state and logic for the Pomodoro timer:
  * - which mode is active (focus / shortBreak)
  * - how much time is left
@@ -38,6 +65,7 @@ export function usePomodoro() {
     if (secondsLeft > 0) return;
 
     setIsRunning(false);
+    playBeep();
 
     if (mode === "focus") {
       setSessionsCompleted((prev) => prev + 1);
