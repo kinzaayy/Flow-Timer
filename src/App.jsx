@@ -3,10 +3,12 @@ import TimerDisplay from "./components/TimerDisplay";
 import Controls from "./components/Controls";
 import ModeSelector from "./components/ModeSelector";
 import SessionCounter from "./components/SessionCounter";
+import DurationInput from "./components/DurationInput";
 
 export default function App() {
   const {
     mode,
+    durations,
     secondsLeft,
     isRunning,
     sessionsCompleted,
@@ -14,7 +16,21 @@ export default function App() {
     pause,
     reset,
     switchMode,
+    setDuration,
   } = usePomodoro();
+
+  const handleSwitchMode = (newMode) => {
+    if (newMode === mode) return;
+
+    if (isRunning) {
+      const confirmed = window.confirm(
+        "A session is running. Switching modes will stop and reset it. Continue?"
+      );
+      if (!confirmed) return;
+    }
+
+    switchMode(newMode);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-4">
@@ -23,7 +39,14 @@ export default function App() {
           Flow<span className="text-brand-600">Timer</span>
         </h1>
 
-        <ModeSelector mode={mode} onSwitchMode={switchMode} />
+        <ModeSelector mode={mode} onSwitchMode={handleSwitchMode} />
+
+        <DurationInput
+          mode={mode}
+          durations={durations}
+          isRunning={isRunning}
+          onSetDuration={setDuration}
+        />
 
         <TimerDisplay secondsLeft={secondsLeft} />
 
