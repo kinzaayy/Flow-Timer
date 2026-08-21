@@ -12,6 +12,7 @@ Built as the first portfolio project for the Flow Timer brand.
 - Audio alert when a session ends
 - Custom timer duration per mode (1–120 minutes)
 - Confirmation prompt before switching modes mid-session
+- Desktop Notifications
 
 ## Tech Stack
 
@@ -40,5 +41,5 @@ npm run dev
 
 ## Roadmap
 
-- **v2:** dark mode, desktop notifications, daily stats, settings panel
+- **v2:** dark mode, daily stats, settings panel
 - **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
