@@ -10,9 +10,10 @@ Built as the first portfolio project for the Flow Timer brand.
 - Session counter — tracks completed focus sessions today, persisted across page reloads
 - Three modes: Focus, Short Break, and Long Break — automatically cycles to a long break after every 4 focus sessions
 - Audio alert when a session ends
+- Desktop notifications when a session ends (with user permission)
 - Custom timer duration per mode (1–120 minutes)
 - Confirmation prompt before switching modes mid-session
-- Desktop Notifications
+- Stats view — last 7 days of completed focus sessions
 
 ## Tech Stack
 
@@ -24,11 +25,13 @@ Built as the first portfolio project for the Flow Timer brand.
 
 ```
 src/
-  components/    UI pieces (TimerDisplay, Controls, ModeSelector, SessionCounter, DurationInput)
+  components/    UI pieces (TimerDisplay, Controls, ModeSelector, SessionCounter,
+                  DurationInput, StatsView)
   hooks/         usePomodoro.js — all timer state and logic
   utils/         formatTime.js — seconds -> "MM:SS"
-                 dailySessions.js — Local Storage persistence with daily reset
-  App.jsx        wires hook state to components
+                 dailySessions.js — Local Storage persistence, 7-day history
+                 notifications.js — desktop notification permission and dispatch
+  App.jsx        wires hook state to components, toggles timer/stats view
   main.jsx       React entry point
 ```
 
@@ -41,5 +44,5 @@ npm run dev
 
 ## Roadmap
 
-- **v2:** dark mode, daily stats, settings panel
+- **v2:** dark mode, settings panel
 - **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
