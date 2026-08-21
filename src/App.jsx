@@ -12,6 +12,7 @@ export default function App() {
     secondsLeft,
     isRunning,
     sessionsCompleted,
+    focusStreak,
     start,
     pause,
     reset,
@@ -57,7 +58,7 @@ export default function App() {
           onReset={reset}
         />
 
-        <SessionCounter count={sessionsCompleted} />
+        <SessionCounter count={sessionsCompleted} focusStreak={focusStreak} />
       </div>
     </div>
   );

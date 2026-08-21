@@ -1,6 +1,7 @@
 const MODES = [
   { key: "focus", label: "Focus" },
   { key: "shortBreak", label: "Short Break" },
+  { key: "longBreak", label: "Long Break" },
 ];
 
 export default function ModeSelector({ mode, onSwitchMode }) {

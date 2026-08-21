@@ -4,7 +4,10 @@ import { loadSessionsCompleted, saveSessionsCompleted } from "../utils/dailySess
 const DEFAULT_DURATIONS = {
   focus: 25 * 60,
   shortBreak: 5 * 60,
+  longBreak: 15 * 60,
 };
+
+const FOCUS_SESSIONS_BEFORE_LONG_BREAK = 4;
 
 const MIN_DURATION_MINUTES = 1;
 const MAX_DURATION_MINUTES = 120;
@@ -38,11 +41,14 @@ function playBeep() {
 
 /**
  * Owns all state and logic for the Pomodoro timer:
- * - which mode is active (focus / shortBreak)
+ * - which mode is active (focus / shortBreak / longBreak)
  * - how much time is left
  * - whether the timer is running
  * - how many focus sessions were completed today (persisted in Local
  *   Storage, and automatically reset to 0 when the date changes)
+ * - how many focus sessions have been completed since the last long
+ *   break (0–3); the 4th automatically routes to a long break instead
+ *   of a short one
  *
  * Components just read this state and call the returned actions.
  */
@@ -52,6 +58,9 @@ export function usePomodoro() {
   const [secondsLeft, setSecondsLeft] = useState(DEFAULT_DURATIONS.focus);
   const [isRunning, setIsRunning] = useState(false);
   const [sessionsCompleted, setSessionsCompleted] = useState(loadSessionsCompleted);
+  // Tracks focus sessions completed since the last long break (0-3, resets on long break).
+  // Separate from sessionsCompleted, which is the persisted daily total.
+  const [focusStreak, setFocusStreak] = useState(0);
 
   const intervalRef = useRef(null);
 
@@ -75,7 +84,15 @@ export function usePomodoro() {
 
     if (mode === "focus") {
       setSessionsCompleted((prev) => prev + 1);
-      switchMode("shortBreak");
+
+      const newStreak = focusStreak + 1;
+      if (newStreak >= FOCUS_SESSIONS_BEFORE_LONG_BREAK) {
+        setFocusStreak(0);
+        switchMode("longBreak");
+      } else {
+        setFocusStreak(newStreak);
+        switchMode("shortBreak");
+      }
     } else {
       switchMode("focus");
     }
@@ -105,7 +122,7 @@ export function usePomodoro() {
   );
 
   /**
-   * Updates the duration for a given mode ("focus" or "shortBreak").
+   * Updates the duration for a given mode ("focus", "shortBreak", or "longBreak").
    * Only allowed while the timer isn't running, to avoid confusing an
    * in-progress countdown. Clamps to a sane 1–120 minute range and
    * immediately reflects the new duration if that mode is currently active.
@@ -135,6 +152,7 @@ export function usePomodoro() {
     secondsLeft,
     isRunning,
     sessionsCompleted,
+    focusStreak,
     start,
     pause,
     reset,
