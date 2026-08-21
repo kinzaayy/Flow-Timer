@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { loadSessionsCompleted, saveSessionsCompleted } from "../utils/dailySessions";
+import {
+  requestNotificationPermission,
+  showSessionEndNotification,
+} from "../utils/notifications";
 
 const DEFAULT_DURATIONS = {
   focus: 25 * 60,
@@ -50,6 +54,10 @@ function playBeep() {
  *   break (0–3); the 4th automatically routes to a long break instead
  *   of a short one
  *
+ * When a session ends, it plays an audio beep and, if the user has
+ * granted permission, shows a desktop notification. Permission is
+ * requested the first time the timer is started.
+ *
  * Components just read this state and call the returned actions.
  */
 export function usePomodoro() {
@@ -81,6 +89,7 @@ export function usePomodoro() {
 
     setIsRunning(false);
     playBeep();
+    showSessionEndNotification(mode);
 
     if (mode === "focus") {
       setSessionsCompleted((prev) => prev + 1);
@@ -104,7 +113,10 @@ export function usePomodoro() {
     saveSessionsCompleted(sessionsCompleted);
   }, [sessionsCompleted]);
 
-  const start = useCallback(() => setIsRunning(true), []);
+  const start = useCallback(() => {
+    requestNotificationPermission();
+    setIsRunning(true);
+  }, []);
   const pause = useCallback(() => setIsRunning(false), []);
 
   const reset = useCallback(() => {
