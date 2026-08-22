@@ -14,6 +14,7 @@ Built as the first portfolio project for the Flow Timer brand.
 - Custom timer duration per mode (1–120 minutes)
 - Confirmation prompt before switching modes mid-session
 - Stats view — last 7 days of completed focus sessions
+- Dark mode toggle
 
 ## Tech Stack
 
@@ -44,5 +45,5 @@ npm run dev
 
 ## Roadmap
 
-- **v2:** dark mode, settings panel
+- **v2 (remaining):** persist theme preference across reloads; settings modal (sound on/off, notifications on/off, confirm-before-switch on/off, reset today's sessions, restore defaults); optional keyboard shortcuts
 - **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
