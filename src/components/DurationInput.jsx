@@ -8,7 +8,7 @@ export default function DurationInput({ mode, durations, isRunning, onSetDuratio
   };
 
   return (
-    <div className="flex items-center gap-2 text-sm text-slate-500">
+    <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
       <label htmlFor="duration-minutes">Duration (min):</label>
       <input
         id="duration-minutes"
@@ -18,7 +18,7 @@ export default function DurationInput({ mode, durations, isRunning, onSetDuratio
         value={currentMinutes}
         onChange={handleChange}
         disabled={isRunning}
-        className="w-16 px-2 py-1 rounded-lg border border-slate-200 text-center text-slate-700 disabled:bg-slate-100 disabled:text-slate-400"
+        className="w-16 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-center text-slate-700 dark:text-slate-200 disabled:bg-slate-100 dark:disabled:bg-slate-800 disabled:text-slate-400 dark:disabled:text-slate-500"
       />
     </div>
   );
