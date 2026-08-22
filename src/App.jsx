@@ -7,15 +7,17 @@ import SessionCounter from "./components/SessionCounter";
 import DurationInput from "./components/DurationInput";
 import StatsView from "./components/StatsView";
 import { getRecentHistory } from "./utils/dailySessions";
+import { loadDarkModePreference, saveDarkModePreference } from "./utils/theme";
 
 export default function App() {
   const [view, setView] = useState("timer");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(loadDarkModePreference);
 
   // Applies/removes the "dark" class on <html>, which Tailwind's
-  // dark: variants key off of. Not persisted yet — resets on reload.
+  // dark: variants key off of, and persists the choice.
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
+    saveDarkModePreference(isDarkMode);
   }, [isDarkMode]);
 
   const {
