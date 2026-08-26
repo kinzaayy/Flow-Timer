@@ -15,7 +15,6 @@ Built as the first portfolio project for the Flow Timer brand.
 - Confirmation prompt before switching modes mid-session
 - Stats view — last 7 days of completed focus sessions
 - Dark mode toggle
-- Persist theme preference across reloads
 
 ## Tech Stack
 
@@ -46,5 +45,5 @@ npm run dev
 
 ## Roadmap
 
-- **v2 (remaining):**  settings modal (sound on/off, notifications on/off, confirm-before-switch on/off, reset today's sessions, restore defaults); optional keyboard shortcuts
+- **v2 (remaining):** persist theme preference across reloads; settings modal (sound on/off, notifications on/off, confirm-before-switch on/off, reset today's sessions, restore defaults); optional keyboard shortcuts
 - **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
