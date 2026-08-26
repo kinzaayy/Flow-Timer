@@ -12,7 +12,7 @@ function formatDateLabel(dateStr) {
   });
 }
 
-export default function StatsView({ history, onBack, isDarkMode, onToggleDarkMode }) {
+export default function StatsView({ history, onBack, onOpenSettings }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 transition-colors">
       <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-card shadow-sm border border-slate-100 dark:border-slate-700 p-8 flex flex-col gap-6 transition-colors">
@@ -22,11 +22,11 @@ export default function StatsView({ history, onBack, isDarkMode, onToggleDarkMod
           </h1>
           <div className="flex items-center gap-3">
             <button
-              onClick={onToggleDarkMode}
-              aria-label="Toggle dark mode"
+              onClick={onOpenSettings}
+              aria-label="Open settings"
               className="text-sm text-slate-400 dark:text-slate-500 hover:text-brand-600 dark:hover:text-brand-400"
             >
-              {isDarkMode ? "☀️" : "🌙"}
+              ⚙️
             </button>
             <button
               onClick={onBack}

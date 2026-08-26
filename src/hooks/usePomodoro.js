@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { loadSessionsCompleted, saveSessionsCompleted } from "../utils/dailySessions";
+import {
+  loadSessionsCompleted,
+  saveSessionsCompleted,
+  resetTodaysSessions,
+} from "../utils/dailySessions";
 import {
   requestNotificationPermission,
   showSessionEndNotification,
@@ -54,13 +58,14 @@ function playBeep() {
  *   break (0–3); the 4th automatically routes to a long break instead
  *   of a short one
  *
- * When a session ends, it plays an audio beep and, if the user has
- * granted permission, shows a desktop notification. Permission is
- * requested the first time the timer is started.
+ * When a session ends, it plays an audio beep (if soundEnabled) and
+ * shows a desktop notification (if notificationsEnabled and permission
+ * was granted). Permission is requested the first time the timer is
+ * started.
  *
  * Components just read this state and call the returned actions.
  */
-export function usePomodoro() {
+export function usePomodoro({ soundEnabled = true, notificationsEnabled = true } = {}) {
   const [mode, setMode] = useState("focus");
   const [durations, setDurations] = useState(DEFAULT_DURATIONS);
   const [secondsLeft, setSecondsLeft] = useState(DEFAULT_DURATIONS.focus);
@@ -71,6 +76,18 @@ export function usePomodoro() {
   const [focusStreak, setFocusStreak] = useState(0);
 
   const intervalRef = useRef(null);
+
+  // Refs mirror the latest settings so the end-of-session effect (keyed
+  // only on secondsLeft) can read current values without needing to
+  // list them as dependencies, which would reset the timer on toggle.
+  const soundEnabledRef = useRef(soundEnabled);
+  const notificationsEnabledRef = useRef(notificationsEnabled);
+  useEffect(() => {
+    soundEnabledRef.current = soundEnabled;
+  }, [soundEnabled]);
+  useEffect(() => {
+    notificationsEnabledRef.current = notificationsEnabled;
+  }, [notificationsEnabled]);
 
   // Tick every second while running
   useEffect(() => {
@@ -88,8 +105,8 @@ export function usePomodoro() {
     if (secondsLeft > 0) return;
 
     setIsRunning(false);
-    playBeep();
-    showSessionEndNotification(mode);
+    if (soundEnabledRef.current) playBeep();
+    if (notificationsEnabledRef.current) showSessionEndNotification(mode);
 
     if (mode === "focus") {
       setSessionsCompleted((prev) => prev + 1);
@@ -158,6 +175,16 @@ export function usePomodoro() {
     [isRunning, mode]
   );
 
+  /**
+   * Resets today's completed-session count to 0. Does not touch
+   * focusStreak (cycle progress toward the next long break), since
+   * that's a separate concept from the daily stat.
+   */
+  const resetSessionsToday = useCallback(() => {
+    setSessionsCompleted(0);
+    resetTodaysSessions();
+  }, []);
+
   return {
     mode,
     durations,
@@ -170,5 +197,6 @@ export function usePomodoro() {
     reset,
     switchMode,
     setDuration,
+    resetSessionsToday,
   };
 }

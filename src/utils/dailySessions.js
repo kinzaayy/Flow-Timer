@@ -65,6 +65,14 @@ export function saveSessionsCompleted(count) {
 }
 
 /**
+ * Resets today's session count to 0. Only affects today's entry —
+ * past days in the 7-day history are left untouched.
+ */
+export function resetTodaysSessions() {
+  saveSessionsCompleted(0);
+}
+
+/**
  * Returns the last N days (oldest first) as an array of
  * { date, count } objects, including days with no sessions (count: 0).
  * Useful for rendering a stats list without gaps.
