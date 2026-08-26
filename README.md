@@ -3,7 +3,7 @@
 A clean, minimal Pomodoro Timer built with React, Vite, and Tailwind CSS.
 Built as the first portfolio project for the Flow Timer brand.
 
-## Features (v1 / MVP)
+## Features
 
 - 25-minute focus session, 5-minute short break, 15-minute long break
 - Start / Pause / Reset controls
@@ -14,7 +14,7 @@ Built as the first portfolio project for the Flow Timer brand.
 - Custom timer duration per mode (1–120 minutes)
 - Confirmation prompt before switching modes mid-session
 - Stats view — last 7 days of completed focus sessions
-- Dark mode toggle
+- Settings modal — theme (Light/Dark/System, persisted and synced with OS preference), sound and desktop notification toggles, confirm-before-switch toggle, reset today's sessions, restore default settings
 
 ## Tech Stack
 
@@ -27,11 +27,13 @@ Built as the first portfolio project for the Flow Timer brand.
 ```
 src/
   components/    UI pieces (TimerDisplay, Controls, ModeSelector, SessionCounter,
-                  DurationInput, StatsView)
+                  DurationInput, StatsView, SettingsModal)
   hooks/         usePomodoro.js — all timer state and logic
   utils/         formatTime.js — seconds -> "MM:SS"
                  dailySessions.js — Local Storage persistence, 7-day history
                  notifications.js — desktop notification permission and dispatch
+                 theme.js — theme mode (light/dark/system) persistence and resolution
+                 settings.js — sound/notification/confirm toggle persistence
   App.jsx        wires hook state to components, toggles timer/stats view
   main.jsx       React entry point
 ```
@@ -45,5 +47,5 @@ npm run dev
 
 ## Roadmap
 
-- **v2 (remaining):** persist theme preference across reloads; settings modal (sound on/off, notifications on/off, confirm-before-switch on/off, reset today's sessions, restore defaults); optional keyboard shortcuts
-- **v3:** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
+- **v2.0.0:** complete — dark mode (Light/Dark/System, persisted, synced with OS), full settings modal, all polish items shipped. Keyboard shortcuts were scoped as optional and intentionally skipped.
+- **v3 (not started):** to-do list, background music, animated progress ring, themes, weekly stats, accounts, cloud sync
